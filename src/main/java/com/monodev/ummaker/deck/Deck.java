@@ -20,20 +20,26 @@ public class Deck {
     private User user;
 
     @Column(name = "deck_name")
-    String name;
+    private String name;
+
+    @Column(name = "deck_name")
+    private String description;
 
     //TODO JSON Object Mapper
     @Column(name = "content")
-    String content;
+    private String content;
 
     @Column(name = "created_at")
-    LocalDate createdAt;
+    private LocalDate createdAt;
 
     @Column(name = "updated_at")
-    LocalDate updatedAt;
+    private LocalDate updatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<DeckTagged> deckTagged;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DeckTagged> deckTagged;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DeckReaction> deckReactions;
 
     public Long getId() {
         return id;
@@ -73,5 +79,37 @@ public class Deck {
 
     public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<DeckTagged> getDeckTagged() {
+        return deckTagged;
+    }
+
+    public void setDeckTagged(List<DeckTagged> deckTagged) {
+        this.deckTagged = deckTagged;
+    }
+
+    public List<DeckReaction> getDeckReactions() {
+        return deckReactions;
+    }
+
+    public void setDeckReactions(List<DeckReaction> deckReactions) {
+        this.deckReactions = deckReactions;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

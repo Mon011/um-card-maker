@@ -1,6 +1,7 @@
 package com.monodev.ummaker.user;
 
 import com.monodev.ummaker.deck.Deck;
+import com.monodev.ummaker.deck.DeckReaction;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "user", cascade = CascadeType.ALL)
     private List<Deck> decks;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DeckReaction> deckReactions;
 
     private String password;
 
@@ -53,4 +57,19 @@ public class User {
         return password;
     }
 
+    public List<Deck> getDecks() {
+        return decks;
+    }
+
+    public void setDecks(List<Deck> decks) {
+        this.decks = decks;
+    }
+
+    public List<DeckReaction> getDeckReactions() {
+        return deckReactions;
+    }
+
+    public void setDeckReactions(List<DeckReaction> deckReactions) {
+        this.deckReactions = deckReactions;
+    }
 }

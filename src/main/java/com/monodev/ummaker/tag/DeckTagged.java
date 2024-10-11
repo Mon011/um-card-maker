@@ -3,6 +3,8 @@ package com.monodev.ummaker.tag;
 import com.monodev.ummaker.deck.Deck;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity(name = "deck_tagged")
 @Table(schema = "deck_tagged")
 public class DeckTagged {
@@ -11,13 +13,13 @@ public class DeckTagged {
     @Id
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "deck_id")
-    Deck deck;
+    private List<Deck> deck;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
-    Tag tag;
+    private List<Tag> tag;
 
     public void setId(Long id) {
         this.id = id;
@@ -25,5 +27,21 @@ public class DeckTagged {
 
     public Long getId() {
         return id;
+    }
+
+    public List<Deck> getDeck() {
+        return deck;
+    }
+
+    public void setDeck(List<Deck> deck) {
+        this.deck = deck;
+    }
+
+    public List<Tag> getTag() {
+        return tag;
+    }
+
+    public void setTag(List<Tag> tag) {
+        this.tag = tag;
     }
 }

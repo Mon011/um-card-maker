@@ -3,6 +3,8 @@ package com.monodev.ummaker.tag;
 import jakarta.persistence.*;
 import org.hibernate.engine.internal.Cascade;
 
+import java.util.List;
+
 
 @Table(name = "tags")
 @Entity(name = "tag")
@@ -15,5 +17,6 @@ public class Tag {
     @Column
     String name;
 
-    @ManyToOne(Cascade)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    List<DeckTagged> deckTagged;
 }
