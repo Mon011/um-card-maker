@@ -20,7 +20,8 @@ public class DeckReactionService {
 
     @GetMapping("/decks/{id}/reactions")
     public Long getNumberOfReactionByDeckId(@PathVariable("id") Long id) {
-        deckService.findDeckById(id);
+//        return deckService.findDec̣kById(id);
+        return 0l;
     }
 
 

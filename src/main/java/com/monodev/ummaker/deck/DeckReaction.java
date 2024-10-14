@@ -2,9 +2,15 @@ package com.monodev.ummaker.deck;
 
 import com.monodev.ummaker.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "deck_reactions")
 @Entity(name = "deck_reaction")
 public class DeckReaction {
