@@ -1,6 +1,6 @@
 package com.monodev.ummaker.deck;
 
-import com.monodev.ummaker.tag.DeckTagged;
+import com.monodev.ummaker.tag.Tag;
 import com.monodev.ummaker.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,7 +18,8 @@ import java.util.List;
 public class Deck {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @SequenceGenerator(name = "deck_id_seq", sequenceName = "deck_id_seq")
+    @GeneratedValue(strategy = GenerationType.UUID, generator = "deck_id_seq")
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -28,7 +29,7 @@ public class Deck {
     @Column(name = "deck_name")
     private String name;
 
-    @Column(name = "deck_name")
+    @Column(name = "description")
     private String description;
 
     //TODO JSON Object Mapper
@@ -41,9 +42,22 @@ public class Deck {
     @Column(name = "updated_at")
     private LocalDate updatedAt;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<DeckTagged> deckTagged;
+    @JoinTable(name = "deck_tagged",
+            joinColumns = @JoinColumn(name = "deck_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    }, fetch = FetchType.LAZY)
+    private Set<Tag> tags;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<DeckReaction> deckReactions;
+
+    @JoinTable(name = "deck_tagged",
+            joinColumns = @JoinColumn(name = "deck_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    }, fetch = FetchType.LAZY)
+    private Set<Deck> deckReactions;
 }

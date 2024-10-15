@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.Optional;
-
 @Service
 public class DeckService {
     private final DeckRepository deckRepository;
@@ -18,7 +16,7 @@ public class DeckService {
 
     @GetMapping("/decks/{id}")
     public DeckDTO findDeckById(@PathVariable("id") Long id) {
-        if(isDeckPresent(id)) {
+        if (isDeckPresent(id)) {
             throw new DeckNotFoundException();
         }
         return DeckDTO.toDto(deckRepository.findById(id).get());

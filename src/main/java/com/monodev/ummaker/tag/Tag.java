@@ -1,12 +1,13 @@
 package com.monodev.ummaker.tag;
 
+import com.monodev.ummaker.deck.Deck;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.engine.internal.Cascade;
+import org.hibernate.annotations.NaturalId;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,12 +17,14 @@ import java.util.List;
 public class Tag {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "tag_id_seq", sequenceName = "tag_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "tag_id_seq")
     Long id;
 
-    @Column
+    @Column(unique = true, nullable = false)
+    @NaturalId
     String name;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<DeckTagged> deckTagged;
+    @ManyToMany(mappedBy = "tags")
+    Set<Deck> tags;
 }
