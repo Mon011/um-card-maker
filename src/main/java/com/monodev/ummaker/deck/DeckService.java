@@ -14,7 +14,6 @@ public class DeckService {
         this.deckRepository = deckRepository;
     }
 
-    @GetMapping("/decks/{id}")
     public DeckDTO findDeckById(@PathVariable("id") Long id) {
         if (isDeckPresent(id)) {
             throw new DeckNotFoundException();
