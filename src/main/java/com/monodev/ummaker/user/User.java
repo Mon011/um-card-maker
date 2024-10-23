@@ -28,9 +28,6 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(unique = true, nullable = false)
-    private String password;
-
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "user", cascade = CascadeType.ALL)
     private List<Deck> decks;
