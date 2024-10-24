@@ -1,10 +1,23 @@
 package com.monodev.ummaker.user;
 
 import com.monodev.ummaker.deck.Deck;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.HashSet;
 import java.util.List;
@@ -12,8 +25,9 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 @NoArgsConstructor
-@Entity(name = "user")
+@Entity(name = "User")
 @Table(name = "users")
 public class User {
 
@@ -25,8 +39,8 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+    @Column(nullable = false)
+    private String picture;
 
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "user", cascade = CascadeType.ALL)
@@ -43,3 +57,4 @@ public class User {
     )
     private Set<Deck> deckReactions = new HashSet<>();
 }
+
