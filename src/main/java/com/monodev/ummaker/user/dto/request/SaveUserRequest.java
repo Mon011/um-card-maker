@@ -9,5 +9,4 @@ public class SaveUserRequest {
     private String username;
 
     private String picture;
-
 }

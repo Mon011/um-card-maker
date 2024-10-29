@@ -20,7 +20,7 @@ public class UserService {
     }
 
     public UserDTO saveUser(SaveUserRequest request) {
-        if (userRepository.findByUsername(request.getUsername()).isEmpty()) {
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw UserAlreadyExistsException.withUsername(request.getUsername());
         }
 
@@ -31,8 +31,8 @@ public class UserService {
         return new UserDTO(request.getUsername(), request.getPicture());
     }
 
-    public UserDTO findUserById(Long id) {
-        return UserDTO.toDto(userRepository.findById(id).orElseThrow(UserNotFoundException::new));
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
     public Optional<User> findUserByUsername(String username) {
