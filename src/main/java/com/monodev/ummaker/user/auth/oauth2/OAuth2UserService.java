@@ -1,12 +1,16 @@
-package com.monodev.ummaker.user.auth;
+package com.monodev.ummaker.user.auth.oauth2;
 
-import com.monodev.ummaker.user.usecase.LoadOAuthUserUseCase;
+import com.monodev.ummaker.user.auth.usecase.LoadOAuthUserUseCase;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 
 @Slf4j

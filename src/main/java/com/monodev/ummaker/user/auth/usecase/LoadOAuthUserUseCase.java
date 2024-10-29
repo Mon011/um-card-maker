@@ -1,4 +1,4 @@
-package com.monodev.ummaker.user.usecase;
+package com.monodev.ummaker.user.auth.usecase;
 
 
 import com.monodev.ummaker.user.UserService;
@@ -17,7 +17,6 @@ import java.util.Objects;
 public class LoadOAuthUserUseCase {
 
     private final UserService userService;
-
 
     public OAuth2User execute(OAuth2User oAuth2User) {
         return processOAuth2User(oAuth2User);
