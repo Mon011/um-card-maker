@@ -1,7 +1,7 @@
 package com.monodev.ummaker;
 
 
-import com.monodev.ummaker.deck.DeckNotFoundException;
+import com.monodev.ummaker.deck.exception.DeckNotFoundException;
 import com.monodev.ummaker.user.exception.UserAlreadyExistsException;
 import com.monodev.ummaker.user.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;

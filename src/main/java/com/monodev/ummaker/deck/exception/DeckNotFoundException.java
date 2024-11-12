@@ -1,4 +1,4 @@
-package com.monodev.ummaker.deck;
+package com.monodev.ummaker.deck.exception;
 
 public class DeckNotFoundException extends RuntimeException {
 

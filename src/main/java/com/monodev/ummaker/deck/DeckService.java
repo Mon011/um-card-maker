@@ -1,5 +1,6 @@
 package com.monodev.ummaker.deck;
 
+import com.monodev.ummaker.deck.exception.DeckNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,7 @@ public class DeckService {
         return DeckDTO.toDto(deckRepository.findById(id).get());
     }
 
-    public boolean isDeckPresent(Long id) {
+    private boolean isDeckPresent(Long id) {
         return deckRepository.findById(id).isPresent();
     }
 }
