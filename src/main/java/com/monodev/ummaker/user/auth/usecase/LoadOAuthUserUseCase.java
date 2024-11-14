@@ -28,6 +28,8 @@ public class LoadOAuthUserUseCase {
                 Objects.requireNonNull(oAuth2User.getAttribute("picture")).toString()
         );
 
+
+        log.info("Processing authorized user");
         userService.saveUser(new SaveUserRequest(userDTO.username(), userDTO.picture()));
 
         return oAuth2User;
