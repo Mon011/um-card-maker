@@ -2,7 +2,6 @@ package com.monodev.ummaker.user;
 
 import com.monodev.ummaker.deck.Deck;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -33,13 +32,11 @@ public class User {
 
     @Id
     @SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq")
-    @GeneratedValue(strategy = GenerationType.UUID, generator = "user_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "user_id_seq")
     private Long id;
 
-    @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(nullable = false)
     private String picture;
 
     @OneToMany(fetch = FetchType.LAZY,

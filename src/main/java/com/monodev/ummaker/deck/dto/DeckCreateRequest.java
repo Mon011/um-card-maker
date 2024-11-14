@@ -2,7 +2,6 @@ package com.monodev.ummaker.deck.dto;
 
 
 import com.monodev.ummaker.deck.Deck;
-import com.monodev.ummaker.user.dto.UserDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;

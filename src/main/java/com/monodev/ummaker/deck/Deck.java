@@ -3,7 +3,6 @@ package com.monodev.ummaker.deck;
 import com.monodev.ummaker.tag.Tag;
 import com.monodev.ummaker.user.User;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -33,30 +32,24 @@ public class Deck {
 
     @Id
     @SequenceGenerator(name = "deck_id_seq", sequenceName = "deck_id_seq")
-    @GeneratedValue(strategy = GenerationType.UUID, generator = "deck_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "deck_id_seq")
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "deck_name")
     private String name;
 
-    @Column(name = "description")
     private String description;
 
     //TODO JSON Object Mapper
-    @Column(name = "content")
     private String content;
 
-    @Column(name = "created_at")
     private LocalDate createdAt;
 
-    @Column(name = "updated_at")
     private LocalDate updatedAt;
 
-    @JoinTable(name = "deck_tagged",
+    @JoinTable(name = "decks_tagged",
             joinColumns = @JoinColumn(name = "deck_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     @ManyToMany(cascade = {
@@ -66,12 +59,12 @@ public class Deck {
     private Set<Tag> tags;
 
 
-    @JoinTable(name = "deck_tagged",
+    @JoinTable(name = "deck_reactions",
             joinColumns = @JoinColumn(name = "deck_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     }, fetch = FetchType.LAZY)
-    private Set<Deck> deckReactions;
+    private Set<User> deckReactions;
 }
