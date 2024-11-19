@@ -3,19 +3,15 @@ package com.monodev.ummaker.deck;
 import com.monodev.ummaker.deck.dto.DeckCreateRequest;
 import com.monodev.ummaker.deck.dto.DeckDTO;
 import com.monodev.ummaker.deck.exception.DeckNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
+@RequiredArgsConstructor
 public class DeckService {
+
     private final DeckRepository deckRepository;
-
-    @Autowired
-    public DeckService(DeckRepository deckRepository) {
-        this.deckRepository = deckRepository;
-    }
-
 
     public DeckDTO createDeck(DeckCreateRequest deckCreateRequest) {
         var deck = deckRepository.save(DeckCreateRequest.toDomain(deckCreateRequest));

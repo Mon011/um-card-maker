@@ -4,20 +4,16 @@ import com.monodev.ummaker.user.dto.UserDTO;
 import com.monodev.ummaker.user.dto.request.SaveUserRequest;
 import com.monodev.ummaker.user.exception.UserAlreadyExistsException;
 import com.monodev.ummaker.user.exception.UserNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public UserDTO saveUser(SaveUserRequest request) {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
