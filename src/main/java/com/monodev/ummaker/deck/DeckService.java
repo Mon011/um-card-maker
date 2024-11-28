@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class DeckService {
@@ -20,13 +22,9 @@ public class DeckService {
     }
 
     public DeckDTO findDeckById(@PathVariable("id") Long id) {
-        if (isDeckPresent(id)) {
-            throw new DeckNotFoundException();
-        }
-        return DeckDTO.toDto(deckRepository.findById(id).get());
+        return deckRepository.findById(id)
+                .map(DeckDTO::toDto)
+                .orElseThrow(DeckNotFoundException::new);
     }
 
-    private boolean isDeckPresent(Long id) {
-        return deckRepository.findById(id).isPresent();
-    }
 }
