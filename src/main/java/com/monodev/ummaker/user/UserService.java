@@ -5,6 +5,7 @@ import com.monodev.ummaker.user.dto.request.SaveUserRequest;
 import com.monodev.ummaker.user.exception.UserAlreadyExistsException;
 import com.monodev.ummaker.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -38,5 +39,11 @@ public class UserService {
     public void removeUserById(Long id) {
         var user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         userRepository.delete(user);
+    }
+
+    public UserDetailsModel getContext() {
+        return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
+                .map(authentication -> (UserDetailsModel) authentication.getPrincipal())
+                .orElse(null);
     }
 }

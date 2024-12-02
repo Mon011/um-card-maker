@@ -2,6 +2,7 @@ package com.monodev.ummaker.deck.dto;
 
 
 import com.monodev.ummaker.deck.Deck;
+import com.monodev.ummaker.user.UserDetailsModel;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,9 @@ public class DeckCreateRequest {
 
     @NotNull
     LocalDate updatedAt;
+
+    @NotNull
+    UserDetailsModel userDetails;
 
     public static Deck toDomain(DeckCreateRequest deckCreateRequest) {
         return new Deck()
