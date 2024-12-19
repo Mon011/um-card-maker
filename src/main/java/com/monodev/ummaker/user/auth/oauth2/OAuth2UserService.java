@@ -24,11 +24,10 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        log.trace("Loading user {}", userRequest.getClientRegistration().getRegistrationId());
+        log.info("Loading user {}", userRequest.getClientRegistration().getRegistrationId());
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
         return loadOAuthUserUseCase.execute(oAuth2User);
     }
-
 
 }

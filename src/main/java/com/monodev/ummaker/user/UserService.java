@@ -6,6 +6,7 @@ import com.monodev.ummaker.user.exception.UserAlreadyExistsException;
 import com.monodev.ummaker.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -41,9 +42,19 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public UserDetailsModel getContext() {
+    public User getContext() {
         return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
-                .map(authentication -> (UserDetailsModel) authentication.getPrincipal())
+                .map(authentication -> (DefaultOAuth2User) authentication.getPrincipal())
+                .map(principal -> Long.valueOf(principal.getName()))
+                .map(this::findUserById)
+                .orElse(null);
+    }
+
+    public User getContext(DefaultOAuth2User defaultOAuth2User) {
+        return Optional.ofNullable(defaultOAuth2User)
+                .map(principal -> (String) principal.getAttribute("login"))
+                .map(this::findUserByUsername)
+                .map(Optional::get)
                 .orElse(null);
     }
 }

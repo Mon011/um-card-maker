@@ -23,14 +23,18 @@ public class LoadOAuthUserUseCase {
     }
 
     private OAuth2User processOAuth2User(OAuth2User oAuth2User) {
-        System.out.println(oAuth2User.getAttributes());
         UserDTO userDTO = new UserDTO(
                 Objects.requireNonNull(oAuth2User.getAttribute("login")).toString(),
                 Objects.requireNonNull(oAuth2User.getAttribute("avatar_url")).toString()
         );
 
-
         log.info("Processing authorized user");
+
+        if (userService.findUserByUsername(userDTO.username()).isPresent()) {
+            log.info("User already exist");
+            return oAuth2User;
+        }
+
         userService.saveUser(new SaveUserRequest(userDTO.username(), userDTO.picture()));
 
         return oAuth2User;
