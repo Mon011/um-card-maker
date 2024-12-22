@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,7 +14,7 @@ public class TagController {
     private final TagService tagService;
 
     @GetMapping("api/tags")
-    public List<String> getAllTags() {
+    public Set<String> getAllTags() {
         return tagService.getAllTagsName();
     }
 }
