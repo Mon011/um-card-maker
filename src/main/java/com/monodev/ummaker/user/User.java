@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,17 +42,43 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Deck> decks;
+    @JoinColumn(name = "user_id")
+    private List<Deck> decks = new ArrayList<>();
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
-    }, fetch = FetchType.LAZY)
+    }, fetch = FetchType.LAZY,
+            mappedBy = "deck"
+    )
     @JoinTable(
             name = "deck_reactions",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "deck_id")
     )
     private Set<Deck> deckReactions = new HashSet<>();
+
+
+    public void addReaction(Deck deck) {
+        deckReactions.add(deck);
+        deck.getDeckReactions().add(this);
+    }
+
+    public void removeReaction(Deck deck) {
+        deckReactions.remove(deck);
+        deck.getDeckReactions().remove(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
+        if (!(obj instanceof User))
+            return false;
+
+        return id != null && id.equals(((User) obj).getId());
+    }
+
 }
 

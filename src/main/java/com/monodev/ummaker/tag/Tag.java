@@ -10,7 +10,11 @@ import jakarta.persistence.SequenceGenerator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.NaturalId;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -24,8 +28,9 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "tag_id_seq")
     Long id;
 
+    @NaturalId
     String name;
 
     @ManyToMany(mappedBy = "tags")
-    Set<Deck> tags;
+    Set<Deck> decks = new HashSet<>();
 }

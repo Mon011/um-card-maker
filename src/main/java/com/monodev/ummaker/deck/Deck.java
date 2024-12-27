@@ -20,6 +20,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -35,7 +36,8 @@ public class Deck {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "deck_id_seq")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,
+    fetch = FetchType.LAZY)
     private User user;
 
     private String name;
@@ -56,7 +58,7 @@ public class Deck {
             CascadeType.PERSIST,
             CascadeType.MERGE
     }, fetch = FetchType.LAZY)
-    private Set<Tag> tags;
+    private Set<Tag> tags = new HashSet<>();
 
 
     @JoinTable(name = "deck_reactions",
@@ -66,5 +68,26 @@ public class Deck {
             CascadeType.PERSIST,
             CascadeType.MERGE
     }, fetch = FetchType.LAZY)
-    private Set<User> deckReactions;
+    private Set<User> deckReactions = new HashSet<>();
+
+    public void addTag(Tag tag) {
+        tags.add(tag);
+        tag.getDecks().add(this);
+    }
+
+    public void removeTag(Tag tag) {
+        tags.remove(tag);
+        tag.getDecks().remove(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
+        if (!(obj instanceof Deck))
+            return false;
+
+        return id != null && id.equals(((Deck) obj).getId());
+    }
 }
