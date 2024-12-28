@@ -22,7 +22,6 @@ public class UserController {
         this.userService = userService;
     }
 
-
     @GetMapping("/{id}")
     public UserDTO findUserById(@PathVariable("id") Long id) {
         return UserDTO.toDto(userService.findUserById(id));
@@ -39,6 +38,5 @@ public class UserController {
 
         return new ResponseEntity<String>("User deleted successfully", HttpStatus.OK);
     }
-
 
 }

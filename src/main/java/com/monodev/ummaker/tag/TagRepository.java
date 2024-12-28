@@ -1,7 +1,7 @@
 package com.monodev.ummaker.tag;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TagRepository extends CrudRepository<Tag, Long> {
+public interface TagRepository extends JpaRepository<Tag, Long> {
 
 }

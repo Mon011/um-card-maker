@@ -7,6 +7,8 @@ import com.monodev.ummaker.user.User;
 import com.monodev.ummaker.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -24,16 +26,14 @@ public class DeckService {
         return DeckDTO.toDto(deck);
     }
 
-    public DeckDTO findDeckById(@PathVariable("id") Long id) {
+    public Deck findDeckById(@PathVariable("id") Long id) {
         return deckRepository.findById(id)
-                .map(DeckDTO::toDto)
                 .orElseThrow(DeckNotFoundException::new);
     }
 
+    @PreAuthorize("#d.user.username == authentication.principal.username")
     @Transactional
-    public DeckDTO toggleReactionToDeck(Long id, User user) {
-        Deck deck = deckRepository.findById(id).orElseThrow(DeckNotFoundException::new);
-
+    public DeckDTO toggleReactionToDeck(@P("d") Deck deck, User user) {
         user.addReaction(deck);
         userRepository.save(user);
         return DeckDTO.toDto(deck);

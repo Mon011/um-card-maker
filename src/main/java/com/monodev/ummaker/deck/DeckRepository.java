@@ -1,6 +1,7 @@
 package com.monodev.ummaker.deck;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DeckRepository extends CrudRepository<Deck, Long> {
+public interface DeckRepository extends JpaRepository<Deck, Long> {
+
 }
